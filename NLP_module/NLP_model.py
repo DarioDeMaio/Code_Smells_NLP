@@ -17,10 +17,10 @@ for item in os.listdir(path):
 
 # Stampa la lista di nomi dei progetti
 print(projects)
-possible_subfolders = ["src/java", "src/main"]
+possible_subfolders = ["src/java", "src/main", "src/main/java", "src"]
 classes = []
 for k in range(len(projects)):
-    print(projects[k])
+    #print(projects[k])
     for i in range(len(component)):
         line = component[i].strip()
         line = line.replace(".","/") + ".java"
