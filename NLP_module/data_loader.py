@@ -3,7 +3,8 @@ import os
 import git
 
 component = pd.read_excel("dataset/smells.xlsx")
-component = component['ComponentName']
+component = component.drop(['Project','Version','Smell'],axis=1)
+df = pd.DataFrame()
 
 path = "../projects"
 projects = []
@@ -17,18 +18,32 @@ for item in os.listdir(path):
 print(projects)
 
 possible_subfolders = ["src/java", "src/main", "src/main/java", "src"]
-classes = []
+#classes = []
 
 for k in range(len(projects)):
     print(projects[k])
     for i in range(len(component)):
-        line = component[i].strip()
+        line = component.loc[i,'ComponentName'].strip()
         line = line.replace(".","/") + ".java"
         for subfolder in possible_subfolders:
             full_path = os.path.join(path, projects[k], subfolder, line)
             if os.path.exists(full_path):
                 with open(full_path, "r") as f:
                     contenuto = f.read()
-                classes.append(contenuto)
+                #classes.append(contenuto)
+                temp_df = pd.DataFrame({
+                    'Component': [contenuto],
+                    'CDSBP': [component.loc[i,'CDSBP']],
+                    'CC': [component.loc[i,'CC']],
+                    'LC': [component.loc[i,'LC']],
+                    'LZC': [component.loc[i,'LZC']],
+                    'RB': [component.loc[i,'RB']],
+                    'SC': [component.loc[i,'SC']]
+                })
+                df = pd.concat([df, temp_df], ignore_index=True)
                 break # Esci dal ciclo for se hai trovato il file
-print(len(classes))
+
+#print(len(classes))
+print(len(df))
+print(df)
+
