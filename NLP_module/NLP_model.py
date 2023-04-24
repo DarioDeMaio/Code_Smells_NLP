@@ -32,8 +32,8 @@ df = dl.load_data()
 
 # Defining some key variables that will be used later on in the training
 MAX_LEN = 512
-TRAIN_BATCH_SIZE = 16
-VALID_BATCH_SIZE = 16
+TRAIN_BATCH_SIZE = 32
+VALID_BATCH_SIZE = 32
 EPOCHS = 1
 LEARNING_RATE = 1e-05
 tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased', truncation=True, do_lower_case=True)
