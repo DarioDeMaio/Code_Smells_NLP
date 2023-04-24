@@ -5,6 +5,22 @@ from transformers import pipeline, DistilBertTokenizer, DistilBertModel
 import torch
 from tqdm import tqdm
 from torch.utils.data import Dataset, DataLoader, RandomSampler, SequentialSampler
+from sklearn import metrics
+import numpy as np
+
+def hamming_score(y_true, y_pred, normalize=True, sample_weight=None):
+    acc_list = []
+    for i in range(y_true.shape[0]):
+        set_true = set( np.where(y_true[i])[0] )
+        set_pred = set( np.where(y_pred[i])[0] )
+        tmp_a = None
+        if len(set_true) == 0 and len(set_pred) == 0:
+            tmp_a = 1
+        else:
+            tmp_a = len(set_true.intersection(set_pred))/\
+                    float( len(set_true.union(set_pred)) )
+        acc_list.append(tmp_a)
+    return np.mean(acc_list)
 
 
 df = dl.load_data()
@@ -133,3 +149,28 @@ def train(epoch):
 
 for epoch in range(EPOCHS):
     train(epoch)
+
+def validation(testing_loader):
+    model.eval()
+    fin_targets=[]
+    fin_outputs=[]
+    with torch.no_grad():
+        for _, data in tqdm(enumerate(testing_loader, 0)):
+            ids = data['ids']
+            mask = data['mask']
+            token_type_ids = data['token_type_ids']
+            targets = data['targets']
+            outputs = model(ids, mask, token_type_ids)
+            fin_targets.extend(targets.cpu().detach().numpy().tolist())
+            fin_outputs.extend(torch.sigmoid(outputs).cpu().detach().numpy().tolist())
+    return fin_outputs, fin_targets
+
+outputs, targets = validation(testing_loader)
+
+final_outputs = np.array(outputs) >=0.5
+
+val_hamming_loss = metrics.hamming_loss(targets, final_outputs)
+val_hamming_score = hamming_score(np.array(targets), np.array(final_outputs))
+
+print(f"Hamming Score = {val_hamming_score}")
+print(f"Hamming Loss = {val_hamming_loss}")
