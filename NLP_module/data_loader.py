@@ -47,9 +47,12 @@ def load_data():
     #print(len(classes))
     #print(len(df))
     #print(df)
-    final_df = pd.DataFrame()
-    final_df['component'] = df['Component']
-    final_df['labels'] = df.iloc[:, 1:].values.tolist()
+    # final_df = pd.DataFrame()
+    # final_df['component'] = df['Component']
+    # final_df['labels'] = df.iloc[:, 1:].values.tolist()
 
-    return final_df
+    return df
+
+f_df = load_data()
+f_df.to_csv("dataset/final_dataset.csv", index=False)
 
