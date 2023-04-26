@@ -53,6 +53,6 @@ def load_data():
 
     return df
 
-f_df = load_data()
-f_df.to_csv("dataset/final_dataset.csv", index=False)
+# f_df = load_data()
+# f_df.to_csv("dataset/final_dataset.csv", index=False)
 
