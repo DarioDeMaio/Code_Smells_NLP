@@ -33,6 +33,7 @@ def load_data():
                         contenuto = f.read()
                     #classes.append(contenuto)
                     temp_df = pd.DataFrame({
+                        'Project_name': projects[k], 
                         'Component': [contenuto],
                         'CDSBP': [component.loc[i,'CDSBP']],
                         'CC': [component.loc[i,'CC']],
@@ -53,6 +54,6 @@ def load_data():
 
     return df
 
-# f_df = load_data()
-# f_df.to_csv("dataset/final_dataset.csv", index=False)
+f_df = load_data()
+f_df.to_csv("dataset/final_dataset.csv", index=False)
 
