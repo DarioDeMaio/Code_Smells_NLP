@@ -56,6 +56,7 @@ def load_data():
                         'NOM' :[component.loc[i,'NOM']],
                         'WMCNAMM': [component.loc[i,'WMCNAMM']],
                         'NMNOPARAM': [component.loc[i,'NMNOPARAM']],
+                        'CDSBP': [component.loc[i,'CDSBP']],
                         'CC': [component.loc[i,'CC']],
                         'LC': [component.loc[i,'LC']],
                         'LZC': [component.loc[i,'LZC']],
