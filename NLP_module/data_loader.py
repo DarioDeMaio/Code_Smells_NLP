@@ -3,8 +3,8 @@ import os
 import git
 
 def load_data():
-    component = pd.read_excel("dataset/smells.xlsx")
-    component = component.drop(['Project','Version','Smell'],axis=1)
+    component = pd.read_csv("dataset/complete_dataset.csv")
+    #component = component.drop(['Project','Version','Smell'],axis=1)
     df = pd.DataFrame()
 
     path = "../projects"
@@ -29,13 +29,33 @@ def load_data():
             for subfolder in possible_subfolders:
                 full_path = os.path.join(path, projects[k], subfolder, line)
                 if os.path.exists(full_path):
-                    with open(full_path, "r") as f:
-                        contenuto = f.read()
+                    # with open(full_path, "r") as f:
+                    #     contenuto = f.read()
                     #classes.append(contenuto)
                     temp_df = pd.DataFrame({
                         'Project_name': projects[k], 
-                        'Component': [contenuto],
-                        'CDSBP': [component.loc[i,'CDSBP']],
+                        'Component_name': [component.loc[i, 'ComponentName']],
+                        'CBO' :[component.loc[i,'CBO']],
+                        'CYCLO' :[component.loc[i,'CYCLO']],
+                        'DIT' :[component.loc[i,'DIT']],
+                        'ELOC' :[component.loc[i,'ELOC']],
+                        'FanIn' :[component.loc[i,'FanIn']],
+                        'FanOut' :[component.loc[i,'FanOut']],
+                        'LCOM' :[component.loc[i,'LCOM']],
+                        'LOC' :[component.loc[i,'LOC']],
+                        'LOCNAMM' :[component.loc[i,'LOCNAMM']],
+                        'NOA' :[component.loc[i,'NOA']],
+                        'NOC' :[component.loc[i,'NOC']],
+                        'NOM' :[component.loc[i,'NOM']],
+                        'NOMNAMM' :[component.loc[i,'NOMNAMM']],
+                        'NOPA' :[component.loc[i,'NOPA']],
+                        'PMMM' :[component.loc[i,'PMMM']],
+                        'PRB' :[component.loc[i,'PRB']],
+                        'WLOCNAMM' :[component.loc[i,'WLOCNAMM']],
+                        'WMC' :[component.loc[i,'WMC']],
+                        'NOM' :[component.loc[i,'NOM']],
+                        'WMCNAMM': [component.loc[i,'WMCNAMM']],
+                        'NMNOPARAM': [component.loc[i,'NMNOPARAM']],
                         'CC': [component.loc[i,'CC']],
                         'LC': [component.loc[i,'LC']],
                         'LZC': [component.loc[i,'LZC']],
