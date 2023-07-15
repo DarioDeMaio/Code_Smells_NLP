@@ -35,7 +35,7 @@ The following metrics were used to assess the model performances:
 
 ## Statistical Tests
 
-To compare the models' performances, the non-parametric Friedman test was employed.
+To compare the models' performances, was employed the non-parametric Friedman, McNemar and Bonferroni test.
 
 ## Dataset
 
