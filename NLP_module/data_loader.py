@@ -18,7 +18,16 @@ def load_data():
     # Stampa la lista di nomi dei progetti
     print(projects)
 
-    possible_subfolders = ["src/java", "src/main", "src/main/java", "src"]
+    possible_subfolders = ["src/java", "src/main", "src/main/java", "src",
+                           "src/test", "cli/src/java", "hwi/src/java", "jdbc/src/java",
+                           "ql/src/java", "serde/src/java","service/src/java",
+                           "framework/agents/src/main/java","connectors/alfresco/connector/src/main/java",
+                           "connectors/cmis/connector/src/main/java","elasticsearch/connector/src/main/java",
+                           "main/src/main/java","shell/commands/src/main/java", "features/core/src/main/java",
+                           "webconsole/console/src/main/java", "webconsole/features/src/main/java",
+                           "solr/core/src/java", "lucene/core/src/java", "solr/core/src/java/analysis",
+                           "solr/core/src/java/client", "solr/core/src/java/request", "solr/core/src/java/search", "solr/core/src/java/util","solr/core/src/java/response",
+                           "client/src/main/java", ""]
     #classes = []
 
     for k in range(len(projects)):
@@ -29,12 +38,13 @@ def load_data():
             for subfolder in possible_subfolders:
                 full_path = os.path.join(path, projects[k], subfolder, line)
                 if os.path.exists(full_path):
-                    # with open(full_path, "r") as f:
-                    #     contenuto = f.read()
+                    with open(full_path, "r", encoding="latin-1") as f:
+                        contenuto = f.read()
                     #classes.append(contenuto)
                     temp_df = pd.DataFrame({
                         'Project_name': projects[k], 
                         'Component_name': [component.loc[i, 'ComponentName']],
+                        'Contenuto': contenuto,
                         'CBO' :[component.loc[i,'CBO']],
                         'CYCLO' :[component.loc[i,'CYCLO']],
                         'DIT' :[component.loc[i,'DIT']],
@@ -76,5 +86,5 @@ def load_data():
     return df
 
 f_df = load_data()
-f_df.to_csv("dataset/final_dataset.csv", index=False)
+f_df.to_csv("dataset/ultimate3_dataset.csv", index=False)
 
